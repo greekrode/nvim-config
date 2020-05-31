@@ -25,25 +25,25 @@ call plug#end()
 
 " Color config
 if (has("termguicolors"))
- se termguicolors
+ set termguicolors
 endif
-syntax enable
-syntax on
 set background=dark
 colorscheme gruvbox
 
 " Neovim config
-set undodir=~/.config/nvim/undodir
-set undofile
-set number
-set nowrap
-set tabstop=2 softtabstop=2
-set breakindent                                      
-set shiftwidth=2
-set expandtab
-set nowritebackup
+syntax enable
+syntax on
+set undodir=~/.config/nvim/undodir " set undotree file directory
+set undofile " set undotree to save to file
+set number " set line number
+set nowrap " set no soft wrap
+set tabstop=2 softtabstop=2 " set tab size
+set shiftwidth=2 " affect amount of indentation
+set expandtab " set that tab will insert softabstop amount of space characters
+set nowritebackup                                            
 set noswapfile
 set nobackup
+set breakindent                                      
 set smartindent
 set smartcase
 set incsearch
@@ -86,6 +86,77 @@ let g:NERDTreeStatusline = ''
 noremap <silent> <C-b> :NERDTreeToggle<CR>
 " " Close window if NERDTree is the last one
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" NERDTree Syntax Highlight
+" " Enables folder icon highlighting using exact match
+let g:NERDTreeHighlightFolders = 1 
+" " Highlights the folder name
+let g:NERDTreeHighlightFoldersFullName = 1 
+" " Color customization
+let s:brown = "905532"
+let s:aqua =  "3AFFDB"
+let s:blue = "689FB6"
+let s:darkBlue = "44788E"
+let s:purple = "834F79"
+let s:lightPurple = "834F79"
+let s:red = "AE403F"
+let s:beige = "F5C06F"
+let s:yellow = "F09F17"
+let s:orange = "D4843E"
+let s:darkOrange = "F16529"
+let s:pink = "CB6F6F"
+let s:salmon = "EE6E73"
+let s:green = "8FAA54"
+let s:lightGreen = "31B53E"
+let s:white = "FFFFFF"
+let s:rspec_red = 'FE405F'
+let s:git_orange = 'F54D27'
+" " This line is needed to avoid error
+let g:NERDTreeExtensionHighlightColor = {} 
+" " Sets the color of css files to blue
+let g:NERDTreeExtensionHighlightColor['css'] = s:blue 
+" " This line is needed to avoid error
+let g:NERDTreeExactMatchHighlightColor = {} 
+" " Sets the color for .gitignore files
+let g:NERDTreeExactMatchHighlightColor['.gitignore'] = s:git_orange 
+" " This line is needed to avoid error
+let g:NERDTreePatternMatchHighlightColor = {} 
+" " Sets the color for files ending with _spec.rb
+let g:NERDTreePatternMatchHighlightColor['.*_spec\.rb$'] = s:rspec_red 
+" " Sets the color for folders that did not match any rule
+let g:WebDevIconsDefaultFolderSymbolColor = s:beige 
+" " Sets the color for files that did not match any rule
+let g:WebDevIconsDefaultFileSymbolColor = s:blue 
+
+" NERDTree Git Plugin
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ 'Ignored'   : '☒',
+    \ "Unknown"   : "?"
+    \ }
+
+" Nerd Commenter
+" " Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" " Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" " Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" " Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
+" " Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" " Map ++ to call NERD Commenter and use iTerm key bindings 
+" " to bind Ctmd+/ to ++
+vmap ++ <plug>NERDCommenterToggle
+nmap ++ <plug>NERDCommenterToggle
 
 " Fuzzy search
 nnoremap <C-p> :GFiles<CR>
@@ -209,76 +280,6 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-" NERDTree Syntax Highlight
-" " Enables folder icon highlighting using exact match
-let g:NERDTreeHighlightFolders = 1 
-" " Highlights the folder name
-let g:NERDTreeHighlightFoldersFullName = 1 
-
-let s:brown = "905532"
-let s:aqua =  "3AFFDB"
-let s:blue = "689FB6"
-let s:darkBlue = "44788E"
-let s:purple = "834F79"
-let s:lightPurple = "834F79"
-let s:red = "AE403F"
-let s:beige = "F5C06F"
-let s:yellow = "F09F17"
-let s:orange = "D4843E"
-let s:darkOrange = "F16529"
-let s:pink = "CB6F6F"
-let s:salmon = "EE6E73"
-let s:green = "8FAA54"
-let s:lightGreen = "31B53E"
-let s:white = "FFFFFF"
-let s:rspec_red = 'FE405F'
-let s:git_orange = 'F54D27'
-" " This line is needed to avoid error
-let g:NERDTreeExtensionHighlightColor = {} 
-" " Sets the color of css files to blue
-let g:NERDTreeExtensionHighlightColor['css'] = s:blue 
-" " This line is needed to avoid error
-let g:NERDTreeExactMatchHighlightColor = {} 
-" " Sets the color for .gitignore files
-let g:NERDTreeExactMatchHighlightColor['.gitignore'] = s:git_orange 
-" " This line is needed to avoid error
-let g:NERDTreePatternMatchHighlightColor = {} 
-" " Sets the color for files ending with _spec.rb
-let g:NERDTreePatternMatchHighlightColor['.*_spec\.rb$'] = s:rspec_red 
-" " Sets the color for folders that did not match any rule
-let g:WebDevIconsDefaultFolderSymbolColor = s:beige 
-" " Sets the color for files that did not match any rule
-let g:WebDevIconsDefaultFileSymbolColor = s:blue 
-
-" NERDTree TGit Plugin
-let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ 'Ignored'   : '☒',
-    \ "Unknown"   : "?"
-    \ }
-
-" Nerd Commenter
-" " Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-" " Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
-" " Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-" " Enable NERDCommenterToggle to check all selected lines is commented or not
-let g:NERDToggleCheckAllLines = 1
-" " Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-" " Map ++ to call NERD Commenter and use iTerm key bindings 
-" " to bind Ctmd+/ to ++
-vmap ++ <plug>NERDCommenterToggle
-nmap ++ <plug>NERDCommenterToggle
 
 
 " The Silver Searcher
