@@ -17,7 +17,7 @@ Plug 'mattn/emmet-vim'
 Plug 'mhinz/vim-startify'
 Plug 'mbbill/undotree'
 Plug 'preservim/nerdcommenter'
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
@@ -78,10 +78,10 @@ vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
 
 " NERDTree
-let g:NERDTreeShowHidden = 1
-let g:NERDTreeMinimalUI = 1
-let g:NERDTreeIgnore = ['^node_modules$']
-let g:NERDTreeStatusline = ''
+let g:NERDTreeShowHidden = 1 
+let g:NERDTreeMinimalUI = 1 " hide helper
+let g:NERDTreeIgnore = ['^node_modules$'] " ignore node_modules to increase load speed 
+let g:NERDTreeStatusline = '' " set to empty to use lightline
 " " Toggle
 noremap <silent> <C-b> :NERDTreeToggle<CR>
 " " Close window if NERDTree is the last one
