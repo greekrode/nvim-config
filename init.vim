@@ -21,6 +21,7 @@ Plug 'preservim/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
+Plug 'tpope/vim-repeat'
 call plug#end()
 
 " Color config
@@ -35,7 +36,7 @@ syntax enable
 syntax on
 set undodir=~/.config/nvim/undodir " set undotree file directory
 set undofile " set undotree to save to file
-set number " set line number
+set number relativenumber " set line number
 set nowrap " set no soft wrap
 set tabstop=2 softtabstop=2 " set tab size
 set shiftwidth=2 " affect amount of indentation
@@ -51,6 +52,7 @@ set hidden
 set updatetime=250
 set shortmess+=c
 set noshowmode
+set splitright
 let mapleader=" "
 " " Panel switching
 map <leader>h :wincmd h<CR>
@@ -76,6 +78,10 @@ inoremap <C-k> <ESC>:m .-2<CR>==gi
 " " Visual mode
 vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
+" " Map escape for terminal emulator
+tnoremap <Esc> <C-\><C-n>
+" " Map to replace text under cursor
+nnoremap <leader>sr :%s/\<<C-r><C-w>\>/
 
 " NERDTree
 let g:NERDTreeShowHidden = 1 
@@ -179,9 +185,12 @@ let g:ale_fix_on_save = 1
 let g:lightline = {
   \     'colorscheme': 'powerlineish',
   \     'active': {
-  \         'left': [['mode', 'paste' ], ['readonly', 'filename', 'modified']],
+  \         'left': [['mode', 'paste' ], ['gitbranch', 'readonly', 'filename', 'modified'], ],
   \         'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding']]
-  \     }
+  \     },
+  \     'component_function': {
+  \         'gitbranch': 'FugitiveHead'
+  \     },
   \ }
 
 " Suda
@@ -199,6 +208,9 @@ let g:coc_global_extensions = [
       \ 'coc-prettier', 
       \ 'coc-tsserver', 
       \ 'coc-snippets', 
+      \ 'coc-lua',
+      \ 'coc-python',
+      \ 'coc-java',
       \ 'coc-eslint']
 " " To go back to previous state use Ctrl+O
 nmap <silent><leader>gd <Plug>(coc-definition)
@@ -297,4 +309,7 @@ endif
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 " " bind \ (backward slash) to grep shortcut
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+
+" Repeat vim
+silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
 nnoremap \ :Ag<SPACE>
